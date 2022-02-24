@@ -1,3 +1,5 @@
+const { knex } = require("/config/database.conf");
+const wears = knex("wear");
 exports.Wear = class {
   id = null;
 
@@ -7,23 +9,29 @@ exports.Wear = class {
     maxTemp;
   }
 
-  save = () => {
-    console.log("todo save");
-  };
+  save = async () =>
+    await wears.insert(
+      {
+        name,
+        minTemp,
+        maxTemp,
+      },
+      ["id"]
+    );
 
-  static getWears = () => {
-    console.log("todo getWears");
-  };
+  static getWears = async () => await wears.select();
 
-  static getWearById = (id) => {
-    console.log("todo getWearById");
-  };
+  static getWearById = async (id) =>
+    await wears.where({ id: id }).select().first();
 
   static removeWearsById = (id) => {
-    console.log("todo removeWearsById");
+    await wears.where({ id: id }).del();
   };
 
-  static getWearsInTemp = () => {
-    console.log("todo getWearsInTemp");
+  static getWearsInTemp = (temp) => {
+    await wears
+      .where("minTemp", ">", temp)
+      .andWhere("maxTemp", "<", temp)
+      .select();
   };
 };

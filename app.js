@@ -9,15 +9,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // routers
-
-/* 
-model:
-weatherDTO <- ami az open weathertől jön
-wear <- {id, mintemp, maxtemp, name}
-*/
+const wearRouer = require("/routes/wear.route");
+app.use("/wear", wearRouer);
 
 app.use("/", (req, res) => {
-  res.send("Node app is running!");
+  res.send("Node-wear app is running!");
 });
 
 // error handler
