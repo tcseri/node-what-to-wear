@@ -4,7 +4,7 @@ exports.knex = require("knex")({
     host: "127.0.0.1",
     user: "backendapp",
     password: "backendappqw34",
-    database: "wear",
+    database: "wearapp",
   },
   pool: { min: 0, max: 7 },
 });

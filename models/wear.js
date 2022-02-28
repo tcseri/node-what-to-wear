@@ -1,4 +1,4 @@
-const { knex } = require("/config/database.conf");
+const { knex } = require("../config/database");
 const wears = knex("wear");
 exports.Wear = class {
   id = null;
@@ -19,16 +19,16 @@ exports.Wear = class {
       ["id"]
     );
 
-  static getWears = async () => await wears.select();
+  static getAllWears = async () => await wears.select();
 
   static getWearById = async (id) =>
     await wears.where({ id: id }).select().first();
 
-  static removeWearsById = (id) => {
+  static removeWearsById =async (id) => {
     await wears.where({ id: id }).del();
   };
 
-  static getWearsInTemp = (temp) => {
+  static getWearsInTemp = async (temp) => {
     await wears
       .where("minTemp", ">", temp)
       .andWhere("maxTemp", "<", temp)

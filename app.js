@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // routers
-const wearRouer = require("/routes/wear.route");
+const wearRouer = require("./routes/wear");
 app.use("/wear", wearRouer);
 
 app.use("/", (req, res) => {
