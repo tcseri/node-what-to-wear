@@ -23,7 +23,7 @@ app.use(function (err, req, res, next) {
   }
   const msg = err.message || err;
   res.status(500);
-  res.send({ title: "Error van!", message: msg, stack: err.stack });
+  res.send({ message: msg, stack: err.stack });
 });
 
 app.listen(port, () => {

@@ -5,9 +5,7 @@ const weatherData = new Weather();
 exports.addWear = async (req, res, next) => {
   try {
     const wear = new Wear(req.body);
-    const newId = await wear.save();
-    console.log(wear, newId);
-    res.send(newId);
+    res.send(await wear.save());
   } catch (error) {
     next(error);
   }
@@ -35,9 +33,7 @@ exports.getWearsForDate = async (req, res, next) => {
       await weatherData.update();
     }
     const temp = ~~weatherData.getTempForDate(req.params.date);
-    const aaa = await Wear.getWearsInTemp(temp) 
-    console.log(aaa);
-    res.send(aaa);
+    res.send({temp: temp, wears: await Wear.getWearsInTemp(temp)});
   } catch (error) {
     next(error);
   }
