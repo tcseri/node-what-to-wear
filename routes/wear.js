@@ -7,6 +7,6 @@ router.get("/", wearController.getAllWears)
 
 router.post("/", wearController.addWear)
 
-router.get("/date"), wearController.
+router.get("/:date", wearController.getWearsForDate)
 
 module.exports = router;

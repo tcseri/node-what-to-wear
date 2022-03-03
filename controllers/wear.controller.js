@@ -1,10 +1,13 @@
 const { Wear } = require("../models/wear");
+const { Weather } = require("../models/weather");
+const weatherData = new Weather();
 
 exports.addWear = async (req, res, next) => {
   try {
     const wear = new Wear(req.body);
-    await wear.save();
-    res.sendStatus(200);
+    const newId = await wear.save();
+    console.log(wear, newId);
+    res.send(newId);
   } catch (error) {
     next(error);
   }
@@ -28,8 +31,13 @@ exports.getAllWears = async (req, res, next) => {
 
 exports.getWearsForDate = async (req, res, next) => {
   try {
-    // await service date to temp;
-    // return getWearInTemp
+    if (new Date() - weatherData.lastModified > 1000 * 60 * 60 * 24) {
+      await weatherData.update();
+    }
+    const temp = ~~weatherData.getTempForDate(req.params.date);
+    const aaa = await Wear.getWearsInTemp(temp) 
+    console.log(aaa);
+    res.send(aaa);
   } catch (error) {
     next(error);
   }

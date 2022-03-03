@@ -4,17 +4,17 @@ exports.Wear = class {
   id = null;
 
   constructor({ name, minTemp, maxTemp }) {
-    name;
-    minTemp;
-    maxTemp;
+    this.name = name;
+    this.minTemp = minTemp;
+    this.maxTemp = maxTemp;
   }
 
   save = async () =>
     await wears.insert(
       {
-        name,
-        minTemp,
-        maxTemp,
+        name: this.name,
+        mintemp: this.minTemp,
+        maxtemp: this.maxTemp,
       },
       ["id"]
     );
@@ -24,14 +24,13 @@ exports.Wear = class {
   static getWearById = async (id) =>
     await wears.where({ id: id }).select().first();
 
-  static removeWearsById =async (id) => {
+  static removeWearsById = async (id) => {
     await wears.where({ id: id }).del();
   };
 
-  static getWearsInTemp = async (temp) => {
+  static getWearsInTemp = async (temp) =>
     await wears
-      .where("minTemp", ">", temp)
-      .andWhere("maxTemp", "<", temp)
+      .where("mintemp", "<", temp)
+      .andWhere("maxtemp", ">", temp)
       .select();
-  };
 };
