@@ -4,7 +4,6 @@ const lat = 47.1625;
 const lon = 19.5033;
 const weatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${process.env.WEATHER_API_KEY}`;
 const dayInSec = 60 * 60 * 24;
-// heelper fuction kelvinből celsiusba
 
 exports.Weather = class {
   lastModified = null;
