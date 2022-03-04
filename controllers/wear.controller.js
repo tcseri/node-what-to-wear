@@ -1,6 +1,7 @@
 const { Wear } = require("../models/wear");
 const { Weather } = require("../models/weather");
 const weatherData = new Weather();
+const weatherDataExpirationTime = 1000 * 60 * 60 * 24;
 
 exports.addWear = async (req, res, next) => {
   try {
@@ -29,7 +30,7 @@ exports.getAllWears = async (req, res, next) => {
 
 exports.getWearsForDate = async (req, res, next) => {
   try {
-    if (new Date() - weatherData.lastModified > 1000 * 60 * 60 * 24) {
+    if (new Date() - weatherData.lastModified > weatherDataExpirationTime) { // egy nextDay konstasba
       await weatherData.update();
     }
     const temp = ~~weatherData.getTempForDate(req.params.date);

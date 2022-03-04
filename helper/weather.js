@@ -1,0 +1,1 @@
+exports.kelvinToCelsius = (kelvin) => kelvin - 273.15;

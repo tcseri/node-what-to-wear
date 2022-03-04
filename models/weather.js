@@ -2,8 +2,9 @@ const axios = require("axios");
 
 const lat = 47.1625;
 const lon = 19.5033;
-const api_key = "39031a5629f8f52992072c522984aa0b";
-const weatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${api_key}`;
+const weatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${process.env.WEATHER_API_KEY}`;
+const dayInSec = 60 * 60 * 24;
+// heelper fuction kelvinből celsiusba
 
 exports.Weather = class {
   lastModified = null;
@@ -29,8 +30,8 @@ exports.Weather = class {
   };
 
   getTempForDate = (dateInSec) =>
+    // timestemp in between the day and the day +1 day
     this.tempsOfDays.find(
-      // timestemp in between the day and the day +1 day
-      (day) => day.date < dateInSec && dateInSec < day.date + 60 * 60 * 24
+      (day) => day.date < dateInSec && dateInSec < day.date + dayInSec
     )?.temp;
 };
