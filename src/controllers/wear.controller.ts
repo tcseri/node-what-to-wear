@@ -1,42 +1,64 @@
 import { NextFunction, Request, Response } from "express";
-// const { Wear } = require("../models/wear");
-// const { Weather } = require("../models/weather");
-// const weatherData = new Weather();
+import { Weather } from "../models/weather";
+import { Wear } from "../models/wear";
+
+const weatherData = new Weather();
 const weatherDataExpirationTime = 1000 * 60 * 60 * 24;
 
-// exports.addWear = async (req, res, next) => {
-//   try {
-//     const wear = new Wear(req.body);
-//     res.send(await wear.save());
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-// exports.getWearInTemp = async (req, res, next) => {
-//   try {
-//     res.send(await Wear.getWearsInTemp(req.body));
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-export const getAllWears = async (req: Request, res: Response, next: NextFunction) => {
+export const addWear = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    res.send('sss');// await Wear.getAllWears());
+    const { name, mintemp, maxtemp } = req.body;
+    const wear = new Wear(name, mintemp, maxtemp);
+    res.send(await wear.save());
   } catch (error) {
     next(error);
   }
 };
 
-// exports.getWearsForDate = async (req, res, next) => {
-//   try {
-//     if (new Date() - weatherData.lastModified > weatherDataExpirationTime) { // egy nextDay konstasba
-//       await weatherData.update();
-//     }
-//     const temp = ~~weatherData.getTempForDate(req.params.date);
-//     res.send({temp, wears: await Wear.getWearsInTemp(temp)});
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+export const getWearInTemp = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.send(await Wear.getWearsInTemp(req.body));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllWears = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.send(await Wear.getAllWears());
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getWearsForDate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (
+      new Date().getTime() - weatherData.lastModified >
+      weatherDataExpirationTime
+    ) {
+      await weatherData.update();
+    }
+    // tslint:disable-next-line:no-bitwise
+    const temp = ~~weatherData.getTempForDate(+req.params.date);
+    res.send({ temp, wears: await Wear.getWearsInTemp(temp) });
+  } catch (error) {
+    next(error);
+  }
+};

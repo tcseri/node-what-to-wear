@@ -1,5 +1,8 @@
+import Knex from "knex"
+
 const env = process.env;
-exports.knex = require("knex")({
+
+export const knex = Knex({
   client: "pg",
   connection: {
     host: env.DATABASE_HOST,
