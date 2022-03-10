@@ -1,9 +1,15 @@
-import 'dotenv/config'
+import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
-import {wearRouter} from "./routes/wear"
+import { wearRouter } from "./routes/wear";
+import bodyParser from "body-parser";
 
 const app = express();
 const port = process.env.SERVER_PORT;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/jsonI
+app.use(bodyParser.json());
 
 // routers
 app.use("/wear", wearRouter);

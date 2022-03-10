@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get("/", wearController.getAllWears);
 
-router.post("/", wearController.addWear)
+router.post("/", wearController.addWear);
 
-router.get("/:date", wearController.getWearsForDate)
+router.get("/:date", wearController.getWearsForDate);
 
 export const wearRouter = router;

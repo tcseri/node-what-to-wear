@@ -1,10 +1,8 @@
-import { Knex } from 'knex';
-import { WearInreface as Wear} from './wear.interface';
+import { Knex } from "knex";
+import { WearInreface as Wear } from "./wear.interface";
 
-declare module 'knex/types/tables' {
-
+declare module "knex/types/tables" {
   interface Tables {
-
     wear_composite: Knex.CompositeTableType<
       // This interface will be used for return type and
       // `where`, `having` etc where full type is required
@@ -18,7 +16,7 @@ declare module 'knex/types/tables' {
       // and make created_at and updated_at optional.
       // And "id" can't be provided at all.
       // Defaults to "base" type.
-      Partial<Omit<Wear, 'id'>>,
+      Partial<Omit<Wear, "id">>,
       // This interface is used for "update()" calls.
       // As opposed to regular specifying interface only once,
       // when specifying separate update interface, user will be
@@ -35,7 +33,7 @@ declare module 'knex/types/tables' {
       //      .where('id', 10)`
       // will still work.
       // Defaults to Partial "insert" type
-      Partial<Omit<Wear, 'id'>>
+      Partial<Omit<Wear, "id">>
     >;
   }
 }
